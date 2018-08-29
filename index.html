@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>dogout Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <body id="body">
+  	<div class="container pan-nav">
+  		<div class="menu-container" style="display: inline-block;">
+			<div class="row search_box" id="search_box" style="display: inline-block">
+				<input id="s_input" class="" type="text">
+				<div id="search_btn" class="nav-btn">
+					<img src="imgs/Lupa.png">
+				</div>
+			</div>
+			<div style="float: right; display: inline-block;">
+				<table class="table sel_pan">
+				    <tbody>
+				      <tr>
+				        <td><span id="cell_eat" class="cell_btn" title="Eat & Drink"><i class="glyphicon glyphicon-stop"></i></span>Eat&Drink</td>
+				        <td style="width: 150px"><span id="cell_wor" class="cell_btn" title="Workspace" ><i class="glyphicon glyphicon-stop"></i></span>Workspaces</td>
+				        <td><span id="cell_hot" class="cell_btn" title="Hotel"><i class="glyphicon glyphicon-stop"></i></span>Hotels</td>
+				        <td><span id="cell_act" class="cell_btn" title="Activity"><i class="glyphicon glyphicon-stop"></i></span>Activities</td>
+				      </tr>
+				      <tr>
+				        <td><span id="cell_sho" class="cell_btn" title="Shop"><i class="glyphicon glyphicon-stop"></i></span>Shops</td>
+				        <td style="width: 150px"><span id="cell_sup" class="cell_btn" title="Supermarket"><i class="glyphicon glyphicon-stop"></i></span>Supermarkets</td>
+				        <td><span id="cell_bea" class="cell_btn" title="Beach"><i class="glyphicon glyphicon-stop"></i></span>Beaches</td>
+				        <td><span id="cell_spo" class="cell_btn" title="Sport"><i class="glyphicon glyphicon-stop"></i></span>Sports</td>
+				      </tr>
+				    </tbody>
+			  </table>	
+			</div>
+  		</div>
+		<div style="float: right">
+			<div id="screen_mode" class="nav-btn">
+				<img id="full_mode" src="imgs/Full_Screen_Mode_Icon.png">
+				<img id="exact_mode" src="imgs/Exit_Full_Screen_Mode_Icon.png" style="display: none">
+			</div>
+		</div>
+	</div>
+    <div id="map"></div>
+
+    <div class="container footer">
+    	<div style="float: left">
+			<div id="logo">
+				<img src="imgs/logo.png">
+			</div>
+		</div>
+
+		<div style="float: right">
+			<div id="zoom_plu" class="nav-btn">
+				<img id="plus_mode" src="imgs/plus.png">
+			</div>
+			<div id="zoom_min" class="nav-btn">
+				<img id="minus_mode" src="imgs/minus.png">
+			</div>
+		</div>
+    </div>
+
+    <div id="detail-pan" class="row fade">
+    	<div>
+    		<img id="mainPhoto" style="width: 100%;max-height: 250px" src="">
+    	</div>
+    	<div class="container dir-bar" >
+    		<span id="close_pan"><img class="dir-btn" src="imgs/arrow-left.png"></span>
+    		<span id="placeName">Marker & Name</span> 
+    		<!-- <a id="dirUrl" href="#" style="float: right" target="_blank"><img  class="dir-btn" src="direction.png"></a> -->
+    		<span id="drawRoute" style="float: right"><img  class="dir-btn" src="imgs/direction.png"></span>
+    	</div>
+    	<div class="mainBlock" style="width:100%;background-color: #f5f5f5; color:black; display: block">
+    		<div class="subBlock">
+    			<div class="grayColor">name</div>
+    			<div id="placeName_1">Marker & Name</div>	
+    		</div>
+    		<div class="subBlock">
+    			<div class="grayColor">desciption</div>
+    			<div id="description">Marker & Names</div> 	
+    		</div>
+    	</div>
+    	<div class="mainBlock" style="width:100%;color:black; display: block">
+    		<div class="subBlock grayColor">Details from Google Maps</div>
+    		<div class="subBlock">
+    			<div id="address">address</div>
+	    		<div><a id="website" href="#" target="_blank">www.salamiandco.com</a></div>
+	    		<div id="score">4.5</div>
+	    		<div class="rating_bar">
+	    			<div id="star_back" ></div>
+	    			<div class="star" ></div>
+				</div>
+	    	</div>
+    		<div class="subBlock"><a href="#" id="toGoogle" target="_blank">View in Google Maps</a></div> 
+    	</div>
+    	<div id="viewerBtn"  style="text-align: center; position: relative;">
+    		<img id="thumbPhoto" style="width: 90%; height: 125px;margin-left: auto;opacity: 0.8; " src="">
+    		<div id="viewerBtn"  style="position: absolute;bottom: 5px; left: 20px; color: white; font-weight: bold">
+    			<span id="photo_count">1</span>
+    			 photos from Google Maps
+    		</div>
+    	</div>
+    </div>
+
+    <div id="mainView" class="photoViewer main" >
+		
+		<div id="photoSlider" class="carousel-inner">
+		</div>
+		
+		<div id="leftSlider" class="controll-btn" >
+			<i class="glyphicon glyphicon-menu-left" ></i>
+		</div>
+		<div id="rightSlider" class="controll-btn">
+			<i class="glyphicon glyphicon-menu-right" ></i>
+		</div>
+		
+		<div class="page-description">Phto from Google Maps by: <span id="place_name"></span></div>
+		<div class="page-status">
+			<span id="f_btn"><i class="glyphicon glyphicon-arrow-left" ></i></span> 
+			<span style="margin-left: 5px"><span id="pageOrder">1</span>  of <span id="pages">10</span></span>
+		</div>
+		<div class="page-close">
+			<span id="f_btn"><i class="	glyphicon glyphicon-remove" ></i></span> 
+		</div>
+	</div>
+
+	<div id="loaderView" class="loaderView">
+		<div style="margin: auto; display: inline-flex;">
+			<div class="loaderText" style="font-size:32px; margin-right:10px; font-weight:bold">loading...</div>
+			<div class="loading"></div>	
+		</div>
+	</div>
+
+    <div id="maskView" class="photoViewer mask"></div>
+
+    <script type="text/javascript">
+    	var map, palceService, myPos, s_marker, dirService, dirDisplay, selectedPlace, myMarker;
+		var eat=[], wor=[], hot=[], act=[], sho=[], sup=[],bea=[], spo=[];
+		function initMap() {
+			var mapDiv = document.getElementById('map');
+			map = new google.maps.Map(mapDiv, {
+
+			  zoom: 8,
+			  scaleControl:false,
+			  zoomControl:false,
+			  rotateControl:false,
+			  panControl:false,
+			  fullscreenControl:false,
+			  mapTypeControl:false
+			});
+
+			placeService = new google.maps.places.PlacesService(map);
+			s_marker = new google.maps.Marker();
+
+			dirService = new google.maps.DirectionsService;
+			dirDisplay = new google.maps.DirectionsRenderer({map: map, draggable: false});
+
+			var autocomplete = new google.maps.places.Autocomplete(document.getElementById('s_input'));
+			autocomplete.setFields(['address_components', 'geometry', 'name']);
+
+			///////////// map controllers  //////////////  
+
+
+			document.getElementById("drawRoute").addEventListener("click", updateRoute);
+
+			google.maps.event.addListener(map, 'click', function() {   hideDetailPan();  });
+
+			google.maps.event.addDomListener(document.getElementById('search_btn'), 'click', function() {  movingMapToSearch(clickSearch())});
+
+			google.maps.event.addDomListener(document.getElementById('zoom_plu'), 'click', function() { map.setZoom(map.getZoom() + 1);  });
+			google.maps.event.addDomListener(document.getElementById('zoom_min'), 'click', function() { map.setZoom(map.getZoom() - 1);  });
+
+			google.maps.event.addDomListener(document.getElementById('cell_eat'), 'click', function() {  updateMarkers('eat', checkedCell('cell_eat'));  });
+			google.maps.event.addDomListener(document.getElementById('cell_wor'), 'click', function() {  updateMarkers('wor', checkedCell('cell_wor'));  });
+			google.maps.event.addDomListener(document.getElementById('cell_hot'), 'click', function() {  updateMarkers('hot', checkedCell('cell_hot'));  });
+			google.maps.event.addDomListener(document.getElementById('cell_act'), 'click', function() {  updateMarkers('act', checkedCell('cell_act'));  });
+			google.maps.event.addDomListener(document.getElementById('cell_sho'), 'click', function() {  updateMarkers('sho', checkedCell('cell_sho'));  });
+			google.maps.event.addDomListener(document.getElementById('cell_sup'), 'click', function() {  updateMarkers('sup', checkedCell('cell_sup'));  });
+			google.maps.event.addDomListener(document.getElementById('cell_bea'), 'click', function() {  updateMarkers('bea', checkedCell('cell_bea'));  });
+			google.maps.event.addDomListener(document.getElementById('cell_spo'), 'click', function() {  updateMarkers('spo', checkedCell('cell_spo'));  });
+
+			/////// my current position marker//////////////
+			myMarker = new google.maps.Marker();
+
+			if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function(position) {
+			  myPos = {
+			    lat: position.coords.latitude,
+			    lng: position.coords.longitude
+			  };
+			  myMarker.setPosition(myPos);
+			  myMarker.setMap(map);
+			  myMarker.setIcon(window.location.href+'imgs/dog.png');
+
+			  map.setCenter(myPos);
+			}, function() {
+			  handleLocationError(true, infoWindow, map.getCenter());
+			});
+			} else {
+			console.log('Browser doesnt support Geolocation');
+			handleLocationError(false, infoWindow, map.getCenter());
+			}
+
+			myMarker.setZIndex(10000);
+
+			function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+			infoWindow.setPosition(pos);
+			infoWindow.setContent(browserHasGeolocation ?
+			                      'Error: The Geolocation service failed.' :
+			                      'Error: Your browser doesn\'t support geolocation.');
+			infoWindow.open(map);
+			}
+		 	
+			autocomplete.addListener('place_changed', function() {
+			    s_marker.setMap(null);
+			    var place = autocomplete.getPlace();
+			    if (!place.geometry) {  
+			    	map.setCenter(myPos);
+    				map.setZoom(8);
+			    	return; 
+			    }
+
+			    if (place.geometry.viewport) {
+			      map.fitBounds(place.geometry.viewport);
+			    } else {
+			      map.setCenter(place.geometry.location);
+			      map.setZoom(17); 
+			    }
+			    s_marker.setPosition(place.geometry.location);
+			    s_marker.setMap(map);
+			    hideDetailPan();
+			});
+
+			initData();
+		}
+    </script>
+
+    <script src="js/map.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAUfciCLFycnIUlrUUwjApQyhRyNr01o7g&libraries=places&callback=initMap"
+    async defer></script>
+    <script src="js/index.js"></script>
+  </body>
+</html>
